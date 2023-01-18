@@ -5,10 +5,9 @@ from AI.AI import AI
 
 class Negascout(AI):
 
-    def findMove(self, gs, valid_moves,depth):
+    def findMove(self, gs, valid_moves):
         random.shuffle(valid_moves)
-        self.DEPTH = depth
-        self.findMoveNegaScout(gs, valid_moves,self.DEPTH, -self.CHECKMATE, self.CHECKMATE, 1 if gs.red_to_move else -1)
+        self.findMoveNegaScout(gs, valid_moves, self.DEPTH, -self.CHECKMATE, self.CHECKMATE, 1 if gs.red_to_move else -1)
         return self.next_move
 
     def findMoveNegaScout(self, gs, valid_moves, depth, alpha, beta, turn):
@@ -20,11 +19,10 @@ class Negascout(AI):
             next_moves = gs.getAllPossibleMoves()
             score = - self.findMoveNegaScout(gs, next_moves, depth - 1, -beta, -alpha, -turn)
             gs.undoMove()
-            if score > bestValue:
-                bestValue = score
-                if depth == self.DEPTH:
-                    self.next_move = move
-                alpha = max(alpha, bestValue)
-                if alpha >= beta:
-                    break
+            if score >= beta:
+                return score
+            if score > alpha:
+                alpha = score
+                beta = alpha + 1
+                bestValue = alpha
         return bestValue
