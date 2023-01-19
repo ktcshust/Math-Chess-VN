@@ -64,7 +64,7 @@ def scoreMaterial(gs):
     score_3 = 1000045 - score_2
     score_4 = 1000045 - score_1
     return score_3, score_4
-def CalTime(gs):
+def CalTime(gs): #đóng gói time ra ngoài
     time1 = 600
     time2 = 600
     if gs.red_to_move:
