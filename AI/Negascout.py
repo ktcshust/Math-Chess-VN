@@ -11,7 +11,7 @@ class Negascout(AI):
         return self.next_move
 
     def findMoveNegaScout(self, gs, valid_moves, depth, alpha, beta, turn):
-        if depth == 0:
+        if depth == 0 or self.isQuiescent(gs):
             return turn * self.scoreMaterial(gs.board)
         bestValue = -self.CHECKMATE
         for move in valid_moves:
@@ -26,3 +26,10 @@ class Negascout(AI):
                 beta = alpha + 1
                 bestValue = alpha
         return bestValue
+
+    def isQuiescent(self, gs):
+        for row in gs.board:
+            for square in row:
+                if square[0] != "--" and square[1] != "0":
+                    return False
+        return True
